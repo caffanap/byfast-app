@@ -1,5 +1,7 @@
 {
   "name": "byfast-net",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }

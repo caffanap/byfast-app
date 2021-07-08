@@ -1,0 +1,44 @@
+<ion-content>
+  <div class="header">
+    <div class="header-between">
+      <div class="block-center">
+      </div>
+      <div class="title">
+        ByFast NET
+      </div>
+      <div class="block-center">
+      </div>
+    </div>
+  </div>
+  <div class="block">
+    <div class="card">
+      <div class="card-content">
+        <div class="title">
+          login
+        </div>
+        <div class="content-menu">
+          <ion-item>
+            <ion-label position="floating">No Hp</ion-label>
+            <ion-input name="no_telepon" [(ngModel)]="no_telepon"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Password</ion-label>
+            <ion-input name="password" [(ngModel)]="password"></ion-input>
+          </ion-item>
+
+          <div class="btn">
+            <ion-button (click)="login()" expand="full">
+              Login
+            </ion-button>
+          </div>
+
+          <div class="reg">
+            <div class="title">
+              Belum punya akun ? <a (click)="gotoregister()"> Register </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>
