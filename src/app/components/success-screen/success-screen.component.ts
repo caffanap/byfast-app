@@ -9,7 +9,10 @@ import { Router } from '@angular/router';
 })
 export class SuccessScreenComponent implements OnInit {
 
-  constructor(private location: Location, private router: Router) { }
+  title: string
+  constructor(private location: Location, private router: Router) { 
+    this.title = this.router.getCurrentNavigation().extras.state.title
+  }
 
   ngOnInit() {}
 

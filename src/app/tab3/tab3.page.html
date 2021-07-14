@@ -2,18 +2,16 @@
   <div class="konten">
     <div class="konten-section">
       <div class="avatar">
-        avatar
+        <img [src]="profile.avatar ? profile.avatar : '/assets/user.png'">
       </div>
       <div class="konten-item">
         <div class="name">
-          Kukuh Prastyono
+          {{ profile.name }}
         </div>
         <div class="no">
-          +62 8321 5424 7976
+          {{ profile.phone_number }}
         </div>
-        <div class="active-date">
-          active until 21 Juli 2021
-        </div>
+        <ion-button (click)="logout()" style="padding-top: 4px;" fill="outline" size="small" color="light">Logout</ion-button>
       </div>
     </div>
   </div>
@@ -25,28 +23,28 @@
             Detail
           </div>
           <div class="point">
-            <ion-button class="btn" color="primary" fill="clear" size="small">Perbarui</ion-button>
+            <ion-button (click)="updateProfile()" class="btn" color="primary" fill="clear" size="small">Perbarui</ion-button>
           </div>
         </div>
         <div class="content-menu">
           <ion-item>
             <ion-label position="floating">Nama </ion-label>
-            <ion-input [(ngModel)]="nama"></ion-input>
+            <ion-input name="nama" [(ngModel)]="nama"></ion-input>
           </ion-item>
           <ion-item>
             <ion-label position="floating">Email</ion-label>
-            <ion-input></ion-input>
+            <ion-input name="email" [(ngModel)]="email"></ion-input>
           </ion-item>
           <ion-item>
             <ion-label position="floating">Jenis Kelamin</ion-label>
-            <ion-select>
-              <ion-select-option value="laki-laki">Laki - Laki</ion-select-option>
-              <ion-select-option value="perempuan">Perempuan</ion-select-option>
+            <ion-select name="jenkel" [(ngModel)]="jenkel">
+              <ion-select-option value="1">Laki - Laki</ion-select-option>
+              <ion-select-option value="0">Perempuan</ion-select-option>
             </ion-select>
           </ion-item>
           <ion-item>
             <ion-label position="floating">Tanggal Lahir</ion-label>
-            <ion-datetime></ion-datetime>
+            <ion-datetime name="dob" [(ngModel)]="dob"></ion-datetime>
           </ion-item>
         </div>
       </div>
@@ -57,7 +55,7 @@
           Simulasi
         </div>
         <div class="simulasi-container">
-          <div class="info-image">
+          <div class="info-image" (click)="simulasi('Internet')">
             <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
               <circle cx="30" cy="30" r="30" fill="#FFF7ED" />
               <circle cx="30" cy="30" r="24" fill="#FFEDD5" />
@@ -67,7 +65,7 @@
             </svg>
 
           </div>
-          <div class="info-image">
+          <div class="info-image" (click)="simulasi('Instagram')">
             <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
               <circle cx="30" cy="30" r="30" fill="#FDF2F8" />
               <circle cx="30" cy="30" r="24" fill="#FCE7F3" />
@@ -77,7 +75,7 @@
             </svg>
 
           </div>
-          <div class="info-image">
+          <div class="info-image" (click)="simulasi('Twitter')">
             <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
               <circle cx="30" cy="30" r="30" fill="#ECFEFF" />
               <circle cx="30" cy="30" r="24" fill="#CFFAFE" />
@@ -87,7 +85,7 @@
             </svg>
 
           </div>
-          <div class="info-image">
+          <div class="info-image" (click)="simulasi('Youtube')">
             <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
               <circle cx="30" cy="30" r="30" fill="#FEF2F2" />
               <circle cx="30" cy="30" r="24" fill="#FEE2E2" />
@@ -106,28 +104,12 @@
         <div class="title">
           Riwayat Pembelian
         </div>
-        <div class="item-card">
+        <div *ngFor="let item of riwayatList" class="item-card">
           <div class="title">
-            Paket internet lokal Extra
+            {{ item.item_name }}
           </div>
           <div class="subtitle">
-            23 Januari 2021  09:21:23
-          </div>
-        </div>
-        <div class="item-card">
-          <div class="title">
-            Paket internet lokal Extra
-          </div>
-          <div class="subtitle">
-            23 Januari 2021  09:21:23
-          </div>
-        </div>
-        <div class="item-card">
-          <div class="title">
-            Paket internet lokal Extra
-          </div>
-          <div class="subtitle">
-            23 Januari 2021  09:21:23
+            {{ item.time }}
           </div>
         </div>
       </div>

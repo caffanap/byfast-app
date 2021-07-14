@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { NavigationExtras, Router } from '@angular/router';
+import { AlertController } from '@ionic/angular';
+import { PaketService } from '../services/paket.service';
 
 @Component({
   selector: 'app-tab2',
@@ -7,63 +10,39 @@ import { Component } from '@angular/core';
 })
 export class Tab2Page {
 
-  constructor() { }
+  constructor(private router: Router, private alertController: AlertController, private paketService: PaketService) { }
 
-  public Paket = [
-    {
-      nama_kategori: "Terpopuler",
-      item_paket: [
-        {
-          id: 1,
-          title: "Paket internet lokal Extra",
-          subtitle: "20 GB / 30 Hari + 2 GB Tiktok",
-          price: "Rp 50.000"
-        },
-        {
-          id: 2,
-          title: "Paket hemat Mahasiswa",
-          subtitle: "10 GB / 30 Hari",
-          price: "Rp 20.000"
-        },
-        {
-          id: 3,
-          title: "Paket Sahur Ramadhan",
-          subtitle: "20 GB / 30 Hari Jam 1 - 5 pagi",
-          price: "Rp 10.000"
-        },
-      ]
-    },
-    {
-      nama_kategori: "Cocok Buat Kamu",
-      item_paket: [
-        {
-          id: 2,
-          title: "Paket hemat Mahasiswa",
-          subtitle: "10 GB / 30 Hari",
-          price: "Rp 20.000"
-        }, 
-        {
-          id: 3,
-          title: "Paket Sahur Ramadhan",
-          subtitle: "20 GB / 30 Hari Jam 1 - 5 pagi",
-          price: "Rp 10.000"
-        }, 
-        {
-          id: 1,
-          title: "Paket internet lokal Extra",
-          subtitle: "20 GB / 30 Hari + 2 GB Tiktok",
-          price: "Rp 50.000"
-        },
+  public paket = []
 
-      ]
-    }
-  ]
+  ionViewDidEnter() {
+    this.paketService.paket().subscribe((val) => {
+      this.paket = val
+    }, async err => {
+      const alert = await this.alertController.create({
+        header: 'Terjadi Kesalahan!',
+        message: err.error.message,
+        buttons: ['OK']
+      });
+      return alert.present();
+    })
+  }
 
   doRefresh(event) {
-    setTimeout(() => {
-      console.log('Async operation has ended');
+    this.paketService.paket().subscribe((val) => {
+      this.paket = val
       event.target.complete();
-    }, 2000);
+    }, async err => {
+      const alert = await this.alertController.create({
+        header: 'Terjadi Kesalahan!',
+        message: err.error.message,
+        buttons: ['OK']
+      });
+      return alert.present();
+    })
+  }
+
+  goToDetailPage(id) {
+    this.router.navigate(['detail-paket'], { state: {id: id} })
   }
 
 

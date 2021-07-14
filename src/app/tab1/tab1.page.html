@@ -5,17 +5,17 @@
   <div class="konten">
     <div class="konten-section">
       <div class="avatar">
-        avatar
+        <img [src]="profile.avatar ? profile.avatar : '/assets/user.png'">
       </div>
       <div class="konten-item">
         <div class="name">
-          Kukuh Prastyono
+          {{ profile.name }}
         </div>
         <div class="no">
-          +62 8321 5424 7976
+          {{ profile.phone_number }}
         </div>
         <div class="active-date">
-          active until 21 Juli 2021
+          Aktif sampai {{ profile.active_period }}
         </div>
       </div>
     </div>
@@ -25,11 +25,11 @@
       <div class="card-content">
         <div class="harga-point">
           <div class="pulsa ion-activatable ripple-parent">
-            Rp.50000
+            {{ pulsa.balance ? 'Rp '+pulsa.balance : 'Rp 0'}}
             <ion-ripple-effect></ion-ripple-effect>
           </div>
           <div class="point ion-activatable ripple-parent">
-            100 Poin
+            {{ pulsa.point ?  pulsa.point + ' Poin' : '0 Poin'}}
             <ion-ripple-effect></ion-ripple-effect>
           </div>
         </div>
@@ -47,7 +47,7 @@
 
               </div>
               <div class="info-title">
-                10 GB
+                {{ total_kuota.internet }}
               </div>
               <ion-ripple-effect></ion-ripple-effect>
             </div>
@@ -70,7 +70,7 @@
 
               </div>
               <div class="info-title">
-                100 Min
+                {{ total_kuota.call }} Min
               </div>
               <ion-ripple-effect></ion-ripple-effect>
             </div>
@@ -85,7 +85,7 @@
                 </svg>
               </div>
               <div class="info-title">
-                100 Msg
+                {{ total_kuota.sms }} Msg
               </div>
               <ion-ripple-effect></ion-ripple-effect>
             </div>
@@ -104,7 +104,7 @@
 
               </div>
               <div class="info-title">
-                5 GB
+                {{ total_kuota.instagram }}
               </div>
               <ion-ripple-effect></ion-ripple-effect>
             </div>
@@ -121,7 +121,7 @@
 
               </div>
               <div class="info-title">
-                3 GB
+                {{ total_kuota.twitter }}
               </div>
               <ion-ripple-effect></ion-ripple-effect>
             </div>
@@ -137,7 +137,7 @@
 
               </div>
               <div class="info-title">
-                20 GB
+                {{ total_kuota.youtube }}
               </div>
               <ion-ripple-effect></ion-ripple-effect>
             </div>
@@ -146,30 +146,28 @@
       </div>
     </div>
     <div class="banner-container ion-activatable ripple-parent">
-      <div class="banner-title">
-        PROMO <br> AKHIR TAHUN
+      <div class="banner-title" [innerHtml]="banner.title">
       </div>
-      <div class="banner-subtitle">
-        Bebas akses whatsapp 1 Bulan <br> Hanya Rp. 20.000
+      <div class="banner-subtitle" [innerHtml]="banner.description">
       </div>
       <ion-ripple-effect></ion-ripple-effect>
     </div>
     <div class="paket">
       <div class="paket-header">
         <div class="title">Rekomendasi Paket</div>
-        <ion-button class="btn" color="primary" fill="clear" size="small">Semua</ion-button>
+        <ion-button (click)="gotopaket()" class="btn" color="primary" fill="clear" size="small">Semua</ion-button>
       </div>
 
       <div *ngFor="let item of rekomendasiPaket" (click)="goToDetailPage(item.id)" class="paket-item ion-activatable ripple-parent">
         <div class="title">
-          {{ item.title }}
+          {{ item.name }}
         </div>
         <div class="subtitle">
-          {{ item.subtitle }}
+          {{ item.description }}
         </div>
         <div class="content-total">
           <ion-label color="primary">
-            {{ item.price }}
+            {{ item.price ? 'Rp '+item.price : 'Gratis'}}
           </ion-label>
           <div>
             <ion-button shape="round" class="btn" color="primary">

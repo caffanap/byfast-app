@@ -8,32 +8,32 @@
     </div>
   </div>
   <div class="block">
-    <div *ngFor="let item of Paket" class="paket">
+    <div *ngFor="let item of paket" class="paket">
       <div class="paket-header">
-        <div class="title">{{ item.nama_kategori }}</div>
+        <div class="title">{{ item.name }}</div>
       </div>
 
       <div class="container-paket">
-        <div *ngFor="let p of item.item_paket" (click)="goToDetailPage(p.id)"
+        <div *ngFor="let p of item.packets" (click)="goToDetailPage(p.id)"
           class="paket-item">
           <div class="paket-content ion-activatable ripple-parent">
             <div class="item-padding">
               <div class="title">
-                {{ p.title }}
+                {{ p.name }}
               </div>
               <div class="subtitle">
-                {{ p.subtitle }}
+                {{ p.description }}
               </div>
               <div class="content-total">
                 <ion-label color="primary">
-                  {{ p.price }}
+                  {{ p.price ? 'Rp.' + p.price : 'Gratis' }}
                 </ion-label>
               </div>
 
             </div>
             <div class="button-bottom">
 
-              <ion-button shape="round" expand="full" class="btn" color="primary">
+              <ion-button (click)="goToDetailPage(p.id)" shape="round" expand="full" class="btn" color="primary">
                 Beli
               </ion-button>
             </div>

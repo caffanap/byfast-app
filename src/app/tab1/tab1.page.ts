@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
+import { AlertController } from '@ionic/angular';
+import { HomeService } from '../services/home.service';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-tab1',
@@ -8,35 +11,110 @@ import { NavigationExtras, Router } from '@angular/router';
 })
 export class Tab1Page {
 
-  public rekomendasiPaket = [
-    {
-      id: 1,
-      title: "Paket internet lokal Extra",
-      subtitle: "20 GB / 30 Hari + 2 GB Tiktok",
-      price: "Rp 50.000"
-    },
-    {
-      id: 2,
-      title: "Paket hemat Mahasiswa",
-      subtitle: "10 GB / 30 Hari",
-      price: "Rp 20.000"
-    },
-    {
-      id: 3,
-      title: "Paket Sahur Ramadhan",
-      subtitle: "20 GB / 30 Hari Jam 1 - 5 pagi",
-      price: "Rp 10.000"
-    },
-    
-  ]
+  rekomendasiPaket = []
 
-  constructor(private router: Router) {}
+  profile = []
+
+  pulsa = {}
+  
+  banner = {}
+
+  total_kuota = {}
+
+  constructor(private homeService: HomeService, private alertController: AlertController, private router: Router, private userService: UserService) {}
+
+  ionViewDidEnter() {
+    this.getMe()
+    this.getRekomendasiPaket()
+    this.getBanner()
+  }
+
+  getMe() {
+    this.userService.me().subscribe((val) => {
+      this.userService.setId(val.id)
+      this.profile = val
+      this.getPulsa()
+      this.totalKuotaSaya()
+    }, async err => {
+      const alert = await this.alertController.create({
+        header: 'Terjadi Kesalahan!',
+        message: err.error.message,
+        buttons: ['OK']
+      });
+      return alert.present();
+    })
+  }
+
+  totalKuotaSaya() {
+    this.userService.totalKuota().subscribe((val) => {
+      this.total_kuota = val
+    }, async err => {
+      const alert = await this.alertController.create({
+        header: 'Terjadi Kesalahan!',
+        message: err.error.message,
+        buttons: ['OK']
+      });
+      return alert.present();
+    })
+  }
+ 
+  getPulsa() {
+    this.userService.pulsa().subscribe((val) => {
+      this.pulsa = val
+    }, async err => {
+      const alert = await this.alertController.create({
+        header: 'Terjadi Kesalahan!',
+        message: err.error.message,
+        buttons: ['OK']
+      });
+      return alert.present();
+    })
+  }
 
   doRefresh(event) {
-    setTimeout(() => {
-      console.log('Async operation has ended');
+    this.userService.me().subscribe((val) => {
+      this.profile = val
+      this.getPulsa()
+      this.totalKuotaSaya()
       event.target.complete();
-    }, 2000);
+    }, async err => {
+      const alert = await this.alertController.create({
+        header: 'Terjadi Kesalahan!',
+        message: err.error.message,
+        buttons: ['OK']
+      });
+      return alert.present();
+    })
+  }
+
+  getRekomendasiPaket() {
+    this.homeService.rekomendasi().subscribe((val) => {
+      this.rekomendasiPaket = val
+    }, async err => {
+      const alert = await this.alertController.create({
+        header: 'Terjadi Kesalahan!',
+        message: err.error.message,
+        buttons: ['OK']
+      });
+      return alert.present();
+    })
+  }
+
+  getBanner() {
+    this.homeService.banner().subscribe((val) => {
+      this.banner = val
+    }, async err => {
+      const alert = await this.alertController.create({
+        header: 'Terjadi Kesalahan!',
+        message: err.error.message,
+        buttons: ['OK']
+      });
+      return alert.present();
+    })
+  }
+
+  gotopaket() {
+    this.router.navigate(['tabs/tab2'])
   }
 
   goToDetailPage(id) {

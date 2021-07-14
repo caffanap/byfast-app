@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ToastController } from '@ionic/angular';
+import { AlertController, ToastController } from '@ionic/angular';
+import { UserService } from 'src/app/services/user.service';
+
 
 @Component({
   selector: 'app-login',
@@ -9,9 +11,11 @@ import { ToastController } from '@ionic/angular';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private router: Router, private toast: ToastController) { }
+  constructor(private router: Router, private alertController: AlertController, private userService: UserService) { }
   no_telepon: string
   password: string
+
+  loading: boolean = false
 
   ngOnInit() {}
 
@@ -19,24 +23,46 @@ export class LoginComponent implements OnInit {
     this.router.navigateByUrl("register")
   } 
 
-  login() {
+  async login() {
+
+    if (!this.no_telepon || !this.password) {
+      const alert = await this.alertController.create({
+        header: 'Gagal Login!',
+        message: 'Isi semua form',
+        buttons: ['OK']
+      });
+      return alert.present();
+    }
+
+    if (this.password.length < 8) {
+      const alert = await this.alertController.create({
+        header: 'Gagal Login!',
+        message: 'Password Minimal 8',
+        buttons: ['OK']
+      });
+      return alert.present();
+       
+    }
+
+    this.loading = true
     let data = {
-      no_telepon : this.no_telepon,
+      phone_number : this.no_telepon,
       password : this.password
     }
 
-    console.log(data);
-    if (data.no_telepon == '123' && data.password == '123') {
-      
-      localStorage.setItem("SessionUser", "000")
+    this.userService.login(data).subscribe((val) => {
+      this.loading = false
+      localStorage.setItem("SessionUser", val.access_token)
       this.router.navigate([''], { replaceUrl: true })
-    }else{
-      
-      this.toast.create({
-        message: "No Hp atau Password Anda Salah!",
-        duration: 2000
-      })
-      console.log("tst");
-    }
+    }, async err => {
+      this.loading = false
+      const alert = await this.alertController.create({
+        header: 'Gagal Login!',
+        message: err.error.error,
+        buttons: ['OK']
+      });
+  
+      await alert.present();
+    })
   }
 }

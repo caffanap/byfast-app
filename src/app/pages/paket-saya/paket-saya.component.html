@@ -15,67 +15,45 @@
     </div>
   </div>
   <div class="container-block">
-    <div class="paket-item ion-activatable ripple-parent">
+    <div *ngIf="paket" (click)="openModal(paket.id, 'packet')" class="paket-item ion-activatable ripple-parent">
       <div class="title">
-        Paket internet lokal Extra
+        {{ paket.transaction.packet.name }}
       </div>
       <div class="paket-between">
         <div class="subtitle">
-          Aktif sampai 23 Juli 2021
+          Aktif sampai {{ paket.active_period }}
         </div>
         <div class="kuota">
           <div class="current">
-            8 GB
+            {{ paket.current_quota ? (paket.current_quota/1000)+' GB' : '0 GB' }}
           </div>
           <div class="slash">
             /
           </div>
           <div class="left">
-             10GB
+            {{ paket.initial_quota ? (paket.initial_quota/1000)+' GB' : '0 GB' }}
           </div>
         </div>
       </div>
       <ion-ripple-effect></ion-ripple-effect>
     </div>
-    <div class="paket-item ion-activatable ripple-parent">
+    <div *ngFor="let item of topping" (click)="openModal(item.id, 'topping')" class="paket-item ion-activatable ripple-parent">
       <div class="title">
-        Paket internet lokal Extra
+        {{ item.transaction.topping.name }}
       </div>
       <div class="paket-between">
         <div class="subtitle">
-          Aktif sampai 23 Juli 2021
+          Aktif sampai {{ item.active_period }}
         </div>
         <div class="kuota">
           <div class="current">
-            8 GB
+            {{ item.current_quota ? (item.current_quota/1000)+' GB' : '0 GB' }}
           </div>
           <div class="slash">
             /
           </div>
           <div class="left">
-             10GB
-          </div>
-        </div>
-      </div>
-      <ion-ripple-effect></ion-ripple-effect>
-    </div>
-    <div class="paket-item ion-activatable ripple-parent">
-      <div class="title">
-        Paket internet lokal Extra
-      </div>
-      <div class="paket-between">
-        <div class="subtitle">
-          Aktif sampai 23 Juli 2021
-        </div>
-        <div class="kuota">
-          <div class="current">
-            8 GB
-          </div>
-          <div class="slash">
-            /
-          </div>
-          <div class="left">
-             10GB
+            {{ item.initial_quota ? (item.initial_quota/1000)+' GB' : '0 GB' }}
           </div>
         </div>
       </div>

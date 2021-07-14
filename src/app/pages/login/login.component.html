@@ -19,16 +19,16 @@
         <div class="content-menu">
           <ion-item>
             <ion-label position="floating">No Hp</ion-label>
-            <ion-input name="no_telepon" [(ngModel)]="no_telepon"></ion-input>
+            <ion-input name="no_telepon" type="tel" pattern="[0-9]*" [(ngModel)]="no_telepon"></ion-input>
           </ion-item>
           <ion-item>
             <ion-label position="floating">Password</ion-label>
-            <ion-input name="password" [(ngModel)]="password"></ion-input>
+            <ion-input type="password" name="password" [(ngModel)]="password"></ion-input>
           </ion-item>
 
           <div class="btn">
-            <ion-button (click)="login()" expand="full">
-              Login
+            <ion-button [disabled]="loading" (click)="login()" expand="full">
+              {{ loading ? 'Loading . . .' : 'Login'}}
             </ion-button>
           </div>
 

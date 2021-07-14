@@ -5,10 +5,13 @@ import { AuthenticationGuard } from './authentication.guard';
 import { ErrorScreenComponent } from './components/error-screen/error-screen.component';
 import { SuccessScreenComponent } from './components/success-screen/success-screen.component';
 import { DetailPaketComponent } from './pages/detail-paket/detail-paket.component';
+import { DetailPaketModule } from './pages/detail-paket/detail-paket.module';
 import { LoginComponent } from './pages/login/login.component';
 import { LoginModule } from './pages/login/login.module';
 import { PaketSayaComponent } from './pages/paket-saya/paket-saya.component';
+import { PaketSayaModule } from './pages/paket-saya/paket-saya.module';
 import { RegisterComponent } from './pages/register/register.component';
+import { RegisterModule } from './pages/register/register.module';
 
 const routes: Routes = [
   {
@@ -48,7 +51,10 @@ const routes: Routes = [
 @NgModule({
   imports: [
     RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
-    LoginModule
+    LoginModule,
+    RegisterModule,
+    DetailPaketModule,
+    PaketSayaModule
   ],
   exports: [RouterModule]
 })
