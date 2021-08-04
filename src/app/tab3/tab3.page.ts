@@ -16,7 +16,7 @@ export class Tab3Page {
   public jenkel
   public ttl
   public dob
-  profile = {}
+  profile = {} as any
 
   riwayatList = []
 

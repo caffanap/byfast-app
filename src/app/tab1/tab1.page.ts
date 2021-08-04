@@ -15,11 +15,11 @@ export class Tab1Page {
 
   profile = []
 
-  pulsa = {}
+  pulsa = {} as any
   
-  banner = {}
+  banner = {} as any
 
-  total_kuota = {}
+  total_kuota = {} as any
 
   constructor(private homeService: HomeService, private alertController: AlertController, private router: Router, private userService: UserService) {}
 
